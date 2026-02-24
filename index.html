@@ -16,14 +16,12 @@ Magstræde 18, 1204 København K<br/><br/>
 <h3>Kontakt</h3>
 
 <div id="captcha-ui">
-        <p>Bevis at du er et menneske:</p>
+        <p>Bevis at du er et menneske. Skriv bogstaverne fra position <strong><span id="pos1"></span></strong> og <strong><span id="pos2"></span></strong>:</p>
         
         <canvas id="wordCanvas" width="200" height="50" style="border:1px solid #000;"></canvas>
         
-        <p>Skriv bogstaverne fra position <strong><span id="pos1"></span></strong> og <strong><span id="pos2"></span></strong>:</p>
-        
         <input type="text" id="user-input" maxlength="2">
-        <button onclick="valider()">Vis E-mail</button>
+        <button onclick="valider()">Vis e-mail</button>
         <p id="error-msg" style="color:red; display:none;">Forkert. Prøv igen.</p>
     </div>
     
