@@ -22,51 +22,5 @@ CVR: 31864976<br/>
 <h3>Ejendomme</h3>
 Magstræde 16, 1204 København K<br/>
 Magstræde 18, 1204 København K<br/><br/>
-
-<div class="card">
-    <h3>Contact Our Team</h3>
-    <p>Click below to reveal our contact email.</p>
-    
-    <button id="reveal-btn" onclick="handleVerify()">Show Email Address</button>
-    <a id="email-link" href=""></a>
-    <p id="status-msg" class="status"></p>
-</div>
-
-<script>
-    // Configuration
-    const SITE_KEY = 'YOUR_SITE_KEY';
-    const encodedEmail = "eW91cm5hbWVAZXhhbXBsZS5jb20="; // Your Base64 email
-
-    function handleVerify() {
-        const btn = document.getElementById('reveal-btn');
-        const status = document.getElementById('status-msg');
-        
-        status.innerText = "Verifying humanity...";
-        btn.disabled = true;
-
-        grecaptcha.ready(function() {
-            grecaptcha.execute(SITE_KEY, {action: 'reveal_email'}).then(function(token) {
-                /* IMPORTANT NOTE: 
-                   In a perfect world, you would send this 'token' to your server 
-                   to verify the score. For a simple frontend-only reveal:
-                */
-                revealEmail();
-                status.innerText = "Verified by reCAPTCHA";
-            });
-        });
-    }
-
-    function revealEmail() {
-        const email = atob(encodedEmail);
-        const link = document.getElementById('email-link');
-        const btn = document.getElementById('reveal-btn');
-
-        link.href = "mailto:" + email;
-        link.innerText = email;
-        link.style.display = "block";
-        btn.style.display = "none";
-    }
-</script>
-  
 </body>
 </html>
