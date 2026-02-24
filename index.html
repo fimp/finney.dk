@@ -4,7 +4,8 @@
     <title>Finney Aps</title>
 </head>
 <body>
-  
+
+<font face="Times New Roman">  
 Finney Aps<br/>
 CVR: 31864976<br/>
 <br/>
@@ -13,6 +14,82 @@ Magstræde 16, 1204 København K<br/>
 Magstræde 18, 1204 København K<br/><br/>
 
 <h3>Kontakt</h3>
-<img src="1234.png"/>
+
+<div id="captcha-ui">
+        <p>Bevis at du er et menneske:</p>
+        
+        <canvas id="wordCanvas" width="200" height="50" style="border:1px solid #000;"></canvas>
+        
+        <p>Skriv bogstaverne fra position <strong><span id="pos1"></span></strong> og <strong><span id="pos2"></span></strong>:</p>
+        
+        <input type="text" id="user-input" maxlength="2">
+        <button onclick="valider()">Vis E-mail</button>
+        <p id="error-msg" style="color:red; display:none;">Forkert. Prøv igen.</p>
+    </div>
+    
+    <div id="email-display"></div>
+
+<script>
+    // --- 1. KONFIGURATION ---
+    const scrambled = "ƲƶƵƻƨƲƻƇƭưƵƵƬǀŵƫƲ"; 
+    const key = 327; 
+
+    // --- 2. DANSKE ORD PÅ 6 BOGSTAVER ---
+    const ordListe = ["VIKING", "SOMMER", "STRAND", "BADEBY", "SKOVEN", "HJERTE", "KAFFEN", "FLASKE", "STOLEN", "BORDET"];
+    const valgtOrd = ordListe[Math.floor(Math.random() * ordListe.length)];
+    
+    // Find to unikke tal mellem 0 og 5
+    let indices = [];
+    while(indices.length < 2) {
+        let r = Math.floor(Math.random() * 6);
+        if(indices.indexOf(r) === -1) indices.push(r);
+    }
+    
+    // Sorter tallene så brugeren altid starter med den laveste position
+    indices.sort((a, b) => a - b);
+
+    document.getElementById('pos1').innerText = indices[0] + 1;
+    document.getElementById('pos2').innerText = indices[1] + 1;
+
+    // Tegn ordet på Canvas
+    const canvas = document.getElementById('wordCanvas');
+    const ctx = canvas.getContext('2d');
+    ctx.font = 'bold 26px monospace';
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    
+    for(let i=0; i<6; i++) {
+        ctx.strokeStyle = '#ddd';
+        ctx.beginPath();
+        ctx.moveTo(Math.random()*200, Math.random()*50);
+        ctx.lineTo(Math.random()*200, Math.random()*50);
+        ctx.stroke();
+    }
+    
+    ctx.fillText(valgtOrd, 100, 25);
+
+    const korrektSvar = (valgtOrd[indices[0]] + valgtOrd[indices[1]]).toUpperCase();
+
+    function valider() {
+        const input = document.getElementById('user-input').value.toUpperCase().trim();
+        const display = document.getElementById('email-display');
+        const ui = document.getElementById('captcha-ui');
+        const error = document.getElementById('error-msg');
+
+        if (input === korrektSvar) {
+            let email = "";
+            for (let i = 0; i < scrambled.length; i++) {
+                email += String.fromCharCode(scrambled.charCodeAt(i) - key);
+            }
+            display.innerText = email;
+            ui.style.display = "none";
+        } else {
+            error.style.display = "block";
+            document.getElementById('user-input').value = "";
+        }
+    }
+</script>
+
+</font>
 </body>
 </html>
