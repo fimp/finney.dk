@@ -72,6 +72,13 @@ Ejer: <a href="https://www.linkedin.com/in/lassebirkolesen/" target="_blank">Las
 
     const korrektSvar = (valgtOrd[indices[0]] + valgtOrd[indices[1]]).toUpperCase();
 
+    // Gør det muligt at trykke Enter
+    document.getElementById('user-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            valider();
+        }
+    });
+
     function valider() {
         const input = document.getElementById('user-input').value.toUpperCase().trim();
         const display = document.getElementById('email-display');
